@@ -14,12 +14,12 @@ spring:
         - id: duenio-sv
           uri: lb://duenio-sv
           predicates:
-            - Path= /duenio/**
+            - Path=/duenio/**
         - id: barrio-sv
           uri: lb://barrio-sv
           predicates:
-            - Path= /barrio/**
+            - Path=/barrio/**
         - id: vivienda-sv
           uri: lb://vivienda-sv
           predicates:
-            - Path= /vivienda/**
+            - Path=/vivienda/**
