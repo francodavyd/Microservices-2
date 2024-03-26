@@ -1,0 +1,25 @@
+server:
+  port: 8080
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: duenio-sv
+          uri: lb://duenio-sv
+          predicates:
+            - Path= /duenio/**
+        - id: barrio-sv
+          uri: lb://barrio-sv
+          predicates:
+            - Path= /barrio/**
+        - id: vivienda-sv
+          uri: lb://vivienda-sv
+          predicates:
+            - Path= /vivienda/**

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: barrio-sv
+    name: gateway
   cloud:
     config:
       enabled: true
