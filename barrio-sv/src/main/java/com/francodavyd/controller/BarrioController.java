@@ -6,6 +6,7 @@ import com.francodavyd.model.Vivienda;
 import com.francodavyd.model.Barrio;
 import com.francodavyd.repository.IViviendaFeignClient;
 import com.francodavyd.service.IBarrioService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +67,7 @@ public class BarrioController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+@CircuitBreaker(name = "viviendaCB", fallbackMethod = "fallbackagregarVivienda")
     @PostMapping("/agregarVivienda")
     public ResponseEntity<?> agregarVivienda(@RequestBody BarrioViviendaDTO dto){
         try {
@@ -82,6 +84,9 @@ public class BarrioController {
         } catch (Exception e){
            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+    }
+    public ResponseEntity<?> fallbackAgregarVivienda(@RequestBody BarrioViviendaDTO dto){
+        return new ResponseEntity<>("Ha ocurrido un error, vuelve a intentarlo", HttpStatus.NOT_FOUND);
     }
     @GetMapping("/obtenerViviendas/{idBarrio}")
     public ResponseEntity<?> obtenerListaViviendas(@PathVariable Long idBarrio){

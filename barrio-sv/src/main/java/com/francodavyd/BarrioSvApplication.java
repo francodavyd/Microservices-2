@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class TerrenoSvApplication {
+public class BarrioSvApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TerrenoSvApplication.class, args);
+		SpringApplication.run(BarrioSvApplication.class, args);
 	}
 
 }

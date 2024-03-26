@@ -6,6 +6,7 @@ import com.francodavyd.model.Barrio;
 import com.francodavyd.model.Duenio;
 import com.francodavyd.repository.IBarrioFeignClient;
 import com.francodavyd.service.IDuenioService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +67,8 @@ public class DuenioController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @CircuitBreaker(name = "barrioCB" , fallbackMethod = "fallbackAgregarBarrio")
     @PostMapping("/agregarBarrio")
     public ResponseEntity<?> agregarBarrio(@RequestBody DuenioBarrioDTO dto){
         try {
@@ -83,6 +86,11 @@ public class DuenioController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    public ResponseEntity<?> fallbackAgregarBarrio(@RequestBody DuenioBarrioDTO dto){
+        return new ResponseEntity<>("Ha ocurrido un error, vuelve a intentarlo", HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/obtenerBarrios/{idDuenio}")
     public ResponseEntity<?> obtenerListaBarrios(@PathVariable Long idDuenio){
         try {

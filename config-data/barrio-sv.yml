@@ -17,3 +17,15 @@ eureka:
 feign:
   vivienda-sv:
     url: http://localhost:8020/vivienda
+
+resilience4j.circuitbreaker:
+    instances:
+        viviendaCB:
+            registerHealthIndicator: true
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 4
+            waitDurationInOpenState: 5s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10
